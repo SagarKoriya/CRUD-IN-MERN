@@ -1,27 +1,27 @@
 const express = require("express");
-const monggose = require("mongoose");
+const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
-const { default: mongoose } = require("mongoose");
 const cors = require("cors");
 const { Router } = require("express");
 const app = express();
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 // ================= Connectivity ========
-monggose.set("strictQuery", false);
+mongoose.set("strictQuery", false);
 mongoose.connect("mongodb://127.0.0.1:27017/players");
 
-const cricketerSchema = monggose.Schema({
+const cricketerSchema = mongoose.Schema({
   rank: Number,
   name: String,
   country: String,
-  dob: Date,
+  dob: String,
   totalRun: Number,
 });
 
-const Cricketer = monggose.model("cricketers", cricketerSchema);
+const Cricketer = mongoose.model("cricketers", cricketerSchema);
 
 // === GET ,POST, DELETE ========
 app

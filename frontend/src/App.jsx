@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-var bodyFormData = new FormData();
-import superagent from "superagent";
 
 function App() {
   const [name, setName] = useState("zain");
   const [rank, setRank] = useState("5");
   const [country, setCountry] = useState("india");
   const [dob, setDOB] = useState("2023-02-21");
-  const [totalrun, setRun] = useState("5000");
+  const [totalrun, setRun] = useState(5000);
+  const [recall, setRecall] = useState();
   const [cricketers, setCricketers] = useState([]);
 
   const baseURL = "http://localhost:3010/cricketers";
@@ -18,19 +17,12 @@ function App() {
       const x = response.data;
       setCricketers(x);
     });
-  }, []);
+  }, [recall]);
   function handlesubmit() {
-    let data =
-      "Name=" +
-      name +
-      ",Country=" +
-      country +
-      ",DOB=" +
-      dob +
-      ",TotalRun=" +
-      totalrun +
-      ",Rank=" +
-      rank;
+    var today = new Date(),
+      time =
+        today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    setRecall(time);
     const collection1 = {
       Name: name,
       Country: country,
@@ -38,30 +30,8 @@ function App() {
       TotalRun: totalrun,
       Rank: rank,
     };
-    axios({
-      method: "post",
-      url: "http://localhost:3010/cricketers",
-      data: {
-        firstName: "Finn",
-        lastName: "Williams",
-      },
-    });
-    //axios.post("http://localhost:3010/cricketers", "Name=Viren");
-    /*
-    fetch(baseURL, {
-      method: "POST",
-      header: {
-        Accept: "application/json",
-        ContentType: "application/json",
-      },
-      body: JSON.stringify({
-        Name: name,
-        Country: country,
-        DOB: dob,
-        TotalRun: totalrun,
-        Rank: rank,
-      }),
-    });*/
+    axios.post("http://localhost:3010/cricketers", collection1);
+    console.log(time);
   }
 
   return (
@@ -111,11 +81,11 @@ function App() {
         {cricketers.map((i) => (
           <li key={i._id}>
             <p>
-              {i.name}
-              {i.country}
-              {i.rank}
+              {i.name} &nbsp;
+              {i.country} &nbsp;
+              {i.rank} &nbsp;
+              {i.totalRun} &nbsp;
               {i.dob}
-              {i.totalrun}
             </p>
           </li>
         ))}
