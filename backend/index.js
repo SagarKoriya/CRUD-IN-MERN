@@ -39,7 +39,7 @@ app
     console.log(
       "------------------------------New Request generated-------------------------------------------------"
     );
-    console.log(request.body);
+    console.log(request);
     const c1 = new Cricketer({
       // ==== here Rank is the name of the attribute of form field
       rank: request.body.Rank,

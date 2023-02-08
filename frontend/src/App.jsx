@@ -20,7 +20,7 @@ function App() {
     });
   }, []);
   function handlesubmit() {
-    const data =
+    let data =
       "Name=" +
       name +
       ",Country=" +
@@ -38,14 +38,15 @@ function App() {
       TotalRun: totalrun,
       Rank: rank,
     };
-    const newdata = JSON.stringify(collection1);
-    axios.post("http://localhost:3010/cricketers", {
-      Name: name,
-      Country: country,
-      DOB: dob,
-      TotalRun: totalrun,
-      Rank: rank,
+    axios({
+      method: "post",
+      url: "http://localhost:3010/cricketers",
+      data: {
+        firstName: "Finn",
+        lastName: "Williams",
+      },
     });
+    //axios.post("http://localhost:3010/cricketers", "Name=Viren");
     /*
     fetch(baseURL, {
       method: "POST",
